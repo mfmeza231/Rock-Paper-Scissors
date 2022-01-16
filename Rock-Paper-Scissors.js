@@ -3,9 +3,11 @@ const possOutcomes = ['rock', 'paper', 'scissors'];
 let playerScore = 0;
 let computerScore = 0;
 
+game() // Play the game
+
 //playerSelection - User will input their move here
-function playerSelection(selection) {
-    selection = prompt("Rock, Paper or Scissors?");
+function playerSelection() {
+    let selection = prompt("Rock, Paper or Scissors?");
     let capFirstLetter = selection[0].toUpperCase();
     let restOfString = selection.slice(1).toLowerCase();
     let capSelection = (capFirstLetter + restOfString);
@@ -13,14 +15,14 @@ function playerSelection(selection) {
 }
 
 //computerPlay - Computer's random moves
-function computerPlay(outcome) {
-    outcome = possOutcomes[Math.floor(Math.random() * possOutcomes.length)];
+function computerPlay() { //removing parameter. not needed.
+    let outcome = possOutcomes[Math.floor(Math.random() * possOutcomes.length)];
     return outcome;
 }
 
 //Captured player variables
-//let playerMove = playerSelection();
-//let computerMove = computerPlay();
+// let playerMove = playerSelection();
+// let computerMove = computerPlay();
 
 //Single Round Game
 function oneRound(playerMove,computerMove) {
@@ -61,33 +63,35 @@ function oneRound(playerMove,computerMove) {
 }
 
 //oneRound in variable
-//let gameOutcome = oneRound();
+// let gameOutcome = oneRound();
+// console.log(gameOutcome);
 
 function checkWinner() {
     if (playerScore === 5) {
-        return 'You won the game!';
+        console.log('You won the game!');
+        return true; // return true since a winner has been decided
     }else if(computerScore === 5) {
-        return 'Computer won the game!';
+        console.log('Computer won the game!');
+        return true; // return true since a winner has been decided
     }
+    return false; // no winner yet so return false
 }
 
 //Game function - Play to best of 5
 function game() {
-
-    gameOutcome = oneRound();
-    if (gameOutcome === 'You win!') {
-        playerScore++;
-        console.log(playerScore, computerScore);
-        //return 'You win!';
-        return checkWinner();
-    }else if (gameOutcome === 'You lost...') {
-            computerScore++;
+    while (checkWinner() == false) { // play until we have a winner
+        gameOutcome = oneRound();
+        if (gameOutcome === 'You win!') {
+            playerScore++;
             console.log(playerScore, computerScore);
-            //return 'You lost...';
-            return checkWinner();
-    }else if (gameOutcome === 'Tie') {
-            console.log(playerScore, computerScore);
-            //return 'Tie';
-            return checkWinner();
+            console.log('You win!');
+        }else if (gameOutcome === 'You lost...') {
+                computerScore++;
+                console.log(playerScore, computerScore);
+                console.log('You lost...');
+        }else if (gameOutcome === 'Tie') {
+                console.log(playerScore, computerScore);
+                console.log('Tie');
         }
+    }
 }
